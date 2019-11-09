@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29418.71
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BattleSimulator.Domain", "BattleSimulator.Domain\BattleSimulator.Domain.csproj", "{3C9647CB-A2A9-4B81-BA0F-4C479F856805}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BattleSimulator.Application", "BattleSimulator.Application\BattleSimulator.Application.csproj", "{13B46C96-E8CE-4E4D-9603-5C3C5D7485F3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BattleSimulator.Infrastructure.DataAccess", "BattleSimulator.Infrastructure.DataAccess\BattleSimulator.Infrastructure.DataAccess.csproj", "{A3143A96-474D-4085-BECC-A0D451BA360F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BattleSimulator.Infrastructure.Simulator", "BattleSimulator.Infrastructure\BattleSimulator.Infrastructure.Simulator.csproj", "{77B65BAF-76FD-4AC1-8350-30DB97ECAC64}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BattleSimulator.Api", "BattleSimulator.Api2\BattleSimulator.Api.csproj", "{7D21F73E-F4C7-4494-AA83-B96A6E71DB7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattleSimulator.CrossCutting", "BattleSimulator.CrossCutting\BattleSimulator.CrossCutting.csproj", "{907B19A5-5FEB-4E91-AD33-6674A5CEE3AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C9647CB-A2A9-4B81-BA0F-4C479F856805}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C9647CB-A2A9-4B81-BA0F-4C479F856805}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C9647CB-A2A9-4B81-BA0F-4C479F856805}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C9647CB-A2A9-4B81-BA0F-4C479F856805}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13B46C96-E8CE-4E4D-9603-5C3C5D7485F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13B46C96-E8CE-4E4D-9603-5C3C5D7485F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13B46C96-E8CE-4E4D-9603-5C3C5D7485F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13B46C96-E8CE-4E4D-9603-5C3C5D7485F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3143A96-474D-4085-BECC-A0D451BA360F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3143A96-474D-4085-BECC-A0D451BA360F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3143A96-474D-4085-BECC-A0D451BA360F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3143A96-474D-4085-BECC-A0D451BA360F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77B65BAF-76FD-4AC1-8350-30DB97ECAC64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77B65BAF-76FD-4AC1-8350-30DB97ECAC64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77B65BAF-76FD-4AC1-8350-30DB97ECAC64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77B65BAF-76FD-4AC1-8350-30DB97ECAC64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D21F73E-F4C7-4494-AA83-B96A6E71DB7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D21F73E-F4C7-4494-AA83-B96A6E71DB7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D21F73E-F4C7-4494-AA83-B96A6E71DB7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D21F73E-F4C7-4494-AA83-B96A6E71DB7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{907B19A5-5FEB-4E91-AD33-6674A5CEE3AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{907B19A5-5FEB-4E91-AD33-6674A5CEE3AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{907B19A5-5FEB-4E91-AD33-6674A5CEE3AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{907B19A5-5FEB-4E91-AD33-6674A5CEE3AA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3B49D08A-5DC3-4181-A737-E930363644E8}
+	EndGlobalSection
+EndGlobal
