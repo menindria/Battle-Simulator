@@ -5,24 +5,20 @@ using BattleSimulator.Application.Contracts.Responses;
 using BattleSimulator.Application.Contracts.Services;
 using BattleSimulator.CrossCutting;
 using BattleSimulator.Domain;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace BattleSimulator.Application
 {
     public class BattleCacheService : IBattleService
     {
         private readonly IBattleService _battleService;
-        private readonly IMemoryCache _memoryCache;
-        private const string Key = "ID";
 
-        private Battle cache;
+        private static readonly object CacheLock = new object();
+        private static Battle _cache;
 
         public BattleCacheService(
-            IBattleService battleService,
-            IMemoryCache memoryCache)
+            IBattleService battleService)
         {
             _battleService = battleService;
-            _memoryCache = memoryCache;
         }
 
         public Task<IResponse> AddArmyToBattleAsync(AddArmyCommand command)
@@ -32,12 +28,12 @@ namespace BattleSimulator.Application
 
         public async Task<Battle> GetBattleByIdAsync(int battleId)
         {
-            if (cache == null)
+            Battle battle = await _battleService.GetBattleByIdAsync(battleId);
+            
+            lock (CacheLock)
             {
-                cache = await _battleService.GetBattleByIdAsync(battleId);
+                return _cache ?? (_cache = battle);
             }
-
-            return cache;
         }
 
         public Task<IResponse> CreateBattleAsync(CreateBattleCommand command)
@@ -53,7 +49,7 @@ namespace BattleSimulator.Application
         public async Task ResetBattleAsync(int battleId)
         {
             await _battleService.ResetBattleAsync(battleId);
-            cache = null;
+            _cache = null;
         }
     }
 }

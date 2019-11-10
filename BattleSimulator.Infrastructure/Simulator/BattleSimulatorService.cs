@@ -44,7 +44,7 @@ namespace BattleSimulator.Infrastructure.Simulator.Simulator
         public async Task Start(int battleId, IJobCancellationToken cancellationToken)
         {
             Battle battle = await _battleService.GetBattleByIdAsync(battleId);
-
+            
             var workers = new List<Task>();
             foreach (Army army in battle.Armies.Where(x => !x.IsDead))
             {

@@ -31,7 +31,6 @@ namespace BattleSimulator.Api
                         PrepareSchemaIfNecessary = true,
                     }));
 
-            services.AddMemoryCache();
             services.RegisterDomainServices();
             services.RegisterDataAccessServices(Configuration);
             services.RegisterApplicationServices();

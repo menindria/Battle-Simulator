@@ -34,20 +34,7 @@ namespace BattleSimulator.Domain
         public List<Log> Logs { get; private set; } = new List<Log>();
         protected Army() { }
 
-        private Log _lastLog;
-        private Log LastLog
-        {
-            get
-            {
-                if (_lastLog == null)
-                {
-                    _lastLog = Logs.OrderByDescending(x => x.TimeStamp).FirstOrDefault();
-                }
-
-                return _lastLog;
-            }
-            set => _lastLog = value;
-        }
+        private Log LastLog { get; set; }
 
         public Army(string name, int numberOfUnits, StrategyAndAttackOptions strategyAndAttackOption)
         {
@@ -93,7 +80,8 @@ namespace BattleSimulator.Domain
             {
                 _numberOfAttacks++;
             }
-            await logger(Log.CreateAttackedByLog(Battle, offensiveArmy, this));
+            
+            await LogAction(Log.CreateAttackedByLog(Battle, offensiveArmy, this), logger);
             Debug.WriteLine($".................{offensiveArmy.Name} Attacked by {Name}.......................");
         }
 
@@ -102,19 +90,25 @@ namespace BattleSimulator.Domain
             if (attackChanceService.IsSuccessful(this))
             {
                 await defensiveArmy.AttackedBy(this, logger);
-                await logger(Log.CreateAttackLog(Battle, this, defensiveArmy));
+                await LogAction(Log.CreateAttackLog(Battle, this, defensiveArmy), logger);
             }
         }
 
         private async Task Reload(Func<Log, Task> logger)
         {
             await Task.Delay(GetReloadTime());
-            await logger(Log.CreateReloadLog(Battle, this));
+            await LogAction(Log.CreateReloadLog(Battle, this), logger);
         }
 
         private TimeSpan GetReloadTime()
         {
             return TimeSpan.FromSeconds(NumberOfUnits * 0.01);
+        }
+
+        private async Task LogAction(Log log, Func<Log, Task> logger) //TODO:JJ Logging code have code smell, it should be refactored
+        {
+            await logger(log);
+            LastLog = log;
         }
     }
 }
