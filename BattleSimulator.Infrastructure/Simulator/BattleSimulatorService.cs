@@ -74,7 +74,7 @@ namespace BattleSimulator.Infrastructure.Simulator.Simulator
                     await _armyService.Attack(battle, offensiveArmy, defensiveArmyToAttack);
                 }
 
-                Thread.Sleep(offensiveArmy.GetReloadTime());
+                await Task.Delay(offensiveArmy.GetReloadTime());
 
                 await _armyService.Reload(battle, offensiveArmy);
                 lastAction = LogType.Reload; ///TODO:JJ Code smell, should be refactored
