@@ -3,6 +3,7 @@
     public enum LogType
     {
         Reload = 0,
-        Attack = 1
+        Attack = 1,
+        AttackedBy = 2
     }
 }

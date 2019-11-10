@@ -15,9 +15,11 @@ namespace BattleSimulator.Domain.Services
             _attackStrategies = attackStrategies;
         }
 
-        public Task<Army> ExecuteAsync(int id, StrategyAndAttackOptions strategy)
+        public Task<Army> ExecuteAsync(Army offensiveArmy)
         {
-            return _attackStrategies.First(x => x.Option == strategy).ExecuteAsync(id);
+            return _attackStrategies
+                .First(x => x.Option == offensiveArmy.StrategyAndAttackOption)
+                .ExecuteAsync(offensiveArmy);
         }
     }
 }

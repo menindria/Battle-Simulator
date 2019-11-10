@@ -30,7 +30,6 @@ namespace BattleSimulator.Api.Modules
 
             services.AddScoped<IBattleLogRepository, BattleLogRepository>();
             services.AddScoped<IBattleRepository, BattleRepository>();
-            services.AddScoped<IArmyRepository, ArmyRepository>();
         }
     }
 }

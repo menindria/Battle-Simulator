@@ -65,9 +65,9 @@ namespace BattleSimulator.Application
 
         public async Task ResetBattleAsync(int battleId)
         {
-            await _battleRepository.ResetArmyAttackCounterAsync(battleId);
             Battle battle = await _battleRepository.GetByBattleId(battleId);
             battle.Stop();
+            battle.ClearLogs();
             await _unitOfWork.SaveChanges();
         }
     }

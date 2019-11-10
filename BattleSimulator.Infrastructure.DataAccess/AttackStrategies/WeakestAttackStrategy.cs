@@ -1,28 +1,30 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using BattleSimulator.Application.Contracts.Services;
 using BattleSimulator.Domain;
-using BattleSimulator.Domain.Contracts.Repositories;
 using BattleSimulator.Domain.Contracts.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace BattleSimulator.Infrastructure.DataAccess.AttackStrategies
 {
     public class WeakestAttackStrategy : IAttackStrategy
     {
-        private readonly IArmyRepository _armyRepository;
+        private readonly IBattleService _battleService;
 
-        public WeakestAttackStrategy(IArmyRepository armyRepository)
+        public WeakestAttackStrategy(IBattleService battleService)
         {
-            _armyRepository = armyRepository;
+            _battleService = battleService;
         }
 
-        public Task<Army> ExecuteAsync(int id)
+        public async Task<Army> ExecuteAsync(Army offensiveArmy)
         {
-            return _armyRepository
-                .GetArmies()
-                .Where(x => x.NumberOfUnits > x.NumberOfAttacks / 2)
-                .OrderBy(x => x.NumberOfUnits - x.NumberOfAttacks)
-                .FirstOrDefaultAsync(x => x.Id != id); 
+            Battle battle = await _battleService.GetBattleByIdAsync(offensiveArmy.BattleId);
+
+            return
+                battle.Armies
+                    .Where(x => !x.IsDead && x.Id != offensiveArmy.Id)
+                    .OrderBy(x => x.NumberOfUnits - x.NumberOfAttacks)
+                    .FirstOrDefault();
         }
 
         public StrategyAndAttackOptions Option => StrategyAndAttackOptions.Weakest;

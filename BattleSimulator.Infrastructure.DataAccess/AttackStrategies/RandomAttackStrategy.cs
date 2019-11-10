@@ -1,34 +1,35 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BattleSimulator.Application.Contracts.Services;
 using BattleSimulator.Domain;
-using BattleSimulator.Domain.Contracts.Repositories;
 using BattleSimulator.Domain.Contracts.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace BattleSimulator.Infrastructure.DataAccess.AttackStrategies
 {
     public class RandomAttackStrategy : IAttackStrategy
     {
-        private readonly IArmyRepository _armyRepository;
+        private readonly IBattleService _battleService;
         private static readonly Random Random = new Random();
 
-        public RandomAttackStrategy(IArmyRepository armyRepository)
+        public RandomAttackStrategy(IBattleService battleService)
         {
-            _armyRepository = armyRepository;
+            _battleService = battleService;
         }
 
-        public async Task<Army> ExecuteAsync(int id)
+        public async Task<Army> ExecuteAsync(Army offensiveArmy)
         {
-            var allArmies = await _armyRepository
-                .GetArmies()
-                .Where(x => x.NumberOfUnits > x.NumberOfAttacks / 2)
-                .Where(x => x.Id != id)
-                .ToListAsync();
+            Battle battle = await _battleService.GetBattleByIdAsync(offensiveArmy.BattleId);
 
-            if (allArmies.Any())
+            IEnumerable<Army> defensiveArmies =
+                battle.Armies
+                    .Where(x => !x.IsDead && x.Id != offensiveArmy.Id)
+                    .ToList();
+
+            if (defensiveArmies.Any())
             {
-                return allArmies.ElementAt(Random.Next(allArmies.Count));
+                return defensiveArmies.ElementAt(Random.Next(defensiveArmies.Count()));
             }
 
             return null;

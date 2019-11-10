@@ -24,9 +24,12 @@ namespace BattleSimulator.Infrastructure.Simulator
 
         public async Task<IResponse> Start(int battleId)
         {
+
             Battle battle = await _battleService.GetBattleByIdAsync(battleId);
 
             if (battle == null){ return new ErrorResponse("Battle not found"); }
+
+            await ResetAsync(battleId);
 
             IResponse response = battle.Start();
 

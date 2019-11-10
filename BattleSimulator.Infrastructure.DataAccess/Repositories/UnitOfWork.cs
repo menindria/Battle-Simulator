@@ -12,9 +12,9 @@ namespace BattleSimulator.Infrastructure.DataAccess.Repositories
             _dbContext = dbContext;
         }
 
-        public Task SaveChanges()
+        public async Task SaveChanges()
         {
-            return _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

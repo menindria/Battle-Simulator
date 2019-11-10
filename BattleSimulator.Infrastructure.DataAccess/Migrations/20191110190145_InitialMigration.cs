@@ -15,7 +15,7 @@ namespace BattleSimulator.Infrastructure.DataAccess.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Started = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(maxLength: 255, nullable: true)
+                    Name = table.Column<string>(maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,11 +28,10 @@ namespace BattleSimulator.Infrastructure.DataAccess.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    NumberOfAttacks = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(maxLength: 255, nullable: true),
+                    BattleId = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(maxLength: 255, nullable: false),
                     NumberOfUnits = table.Column<int>(nullable: false),
-                    StrategyAndAttackOption = table.Column<int>(nullable: false),
-                    BattleId = table.Column<int>(nullable: true)
+                    StrategyAndAttackOption = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,7 +41,7 @@ namespace BattleSimulator.Infrastructure.DataAccess.Migrations
                         column: x => x.BattleId,
                         principalTable: "Battle",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -52,8 +51,8 @@ namespace BattleSimulator.Infrastructure.DataAccess.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     BattleId = table.Column<int>(nullable: false),
-                    OffensiveArmyId = table.Column<int>(nullable: false),
-                    DefensiveArmyId = table.Column<int>(nullable: true),
+                    ArmyOneId = table.Column<int>(nullable: false),
+                    ArmyTwoId = table.Column<int>(nullable: true),
                     LogType = table.Column<int>(nullable: false),
                     TimeStamp = table.Column<DateTime>(nullable: false)
                 },
@@ -61,21 +60,21 @@ namespace BattleSimulator.Infrastructure.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Log", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Log_Battle_BattleId",
-                        column: x => x.BattleId,
-                        principalTable: "Battle",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Log_Army_DefensiveArmyId",
-                        column: x => x.DefensiveArmyId,
+                        name: "FK_Log_Army_ArmyOneId",
+                        column: x => x.ArmyOneId,
                         principalTable: "Army",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Log_Army_OffensiveArmyId",
-                        column: x => x.OffensiveArmyId,
+                        name: "FK_Log_Army_ArmyTwoId",
+                        column: x => x.ArmyTwoId,
                         principalTable: "Army",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Log_Battle_BattleId",
+                        column: x => x.BattleId,
+                        principalTable: "Battle",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -86,19 +85,19 @@ namespace BattleSimulator.Infrastructure.DataAccess.Migrations
                 column: "BattleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Log_ArmyOneId",
+                table: "Log",
+                column: "ArmyOneId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Log_ArmyTwoId",
+                table: "Log",
+                column: "ArmyTwoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Log_BattleId",
                 table: "Log",
                 column: "BattleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Log_DefensiveArmyId",
-                table: "Log",
-                column: "DefensiveArmyId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Log_OffensiveArmyId",
-                table: "Log",
-                column: "OffensiveArmyId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -18,17 +18,15 @@ namespace BattleSimulator.Infrastructure.DataAccess.Repositories
         }
         public Task<Battle> GetByBattleId(int id)
         {
-            return DbSet.Include(x => x.Armies).FirstOrDefaultAsync(x => x.Id == id);
+            return DbSet
+                .Include(x => x.Armies)
+                .ThenInclude(x => x.Logs)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
         
         public async Task<IEnumerable<Battle>> GetAllBattles()
         {
             return await GetAll().ToListAsync();
-        }
-        
-        public Task ResetArmyAttackCounterAsync(int battleId)
-        {
-            return DbContext.Database.ExecuteSqlCommandAsync($"UPDATE Army SET NumberOfAttacks = 0 WHERE BattleId = {battleId}");
         }
     }
 }

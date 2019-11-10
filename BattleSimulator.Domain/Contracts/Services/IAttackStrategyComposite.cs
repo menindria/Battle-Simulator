@@ -4,6 +4,6 @@ namespace BattleSimulator.Domain.Contracts.Services
 {
     public interface IAttackStrategyComposite
     {
-        Task<Army> ExecuteAsync(int id, StrategyAndAttackOptions strategy);
+        Task<Army> ExecuteAsync(Army offensiveArmy);
     }
 }

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using BattleSimulator.Application.Contracts.Responses;
 using BattleSimulator.Application.Contracts.Services;
-using BattleSimulator.Domain;
 using BattleSimulator.Domain.Contracts.Repositories;
 
 namespace BattleSimulator.Application
@@ -25,15 +24,10 @@ namespace BattleSimulator.Application
                 {
                     Id = x.Id,
                     LogType = x.LogType,
-                    OffensiveArmy = x.OffensiveArmyId,
-                    DefensiveArmy = x.DefensiveArmyId,
+                    OffensiveArmy = x.ArmyOneId,
+                    DefensiveArmy = x.ArmyTwoId,
                     TimeStamp = x.TimeStamp,
                 }).ToList();
-        }
-        
-        public Task<Log> GetLastLogForArmy(int armyId)
-        {
-            return _battleLogRepository.GetLastLogForArmy(armyId);
         }
     }
 }

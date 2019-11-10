@@ -4,6 +4,7 @@ using BattleSimulator.Infrastructure.DataAccess.Repositories;
 using BattleSimulator.Infrastructure.Simulator;
 using BattleSimulator.Infrastructure.Simulator.Simulator;
 using BattleSimulator.Infrastructure.Simulator.Simulator.Contracts;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BattleSimulator.Api.Modules
@@ -14,9 +15,11 @@ namespace BattleSimulator.Api.Modules
         {
             services.AddScoped<IBattleFlowService, BattleFlowService>();
             services.AddScoped<IBattleLogService, BattleLogService>();
-            services.AddScoped<IBattleService, BattleService>();
+
+            services.AddScoped<BattleService>();
+            services.AddScoped<IBattleService>(provider => new BattleCacheService(provider.GetRequiredService<BattleService>(), provider.GetRequiredService<IMemoryCache>()));
+
             services.AddScoped<IBattleSimulatorService, BattleSimulatorService>();
-            services.AddScoped<IArmyService, ArmyService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }

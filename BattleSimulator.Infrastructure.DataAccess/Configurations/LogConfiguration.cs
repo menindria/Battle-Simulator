@@ -9,16 +9,16 @@ namespace BattleSimulator.Infrastructure.DataAccess.Configurations
         public void Configure(EntityTypeBuilder<Log> builder)
         {
             builder
-                .HasOne(x => x.OffensiveArmy)
+                .HasOne(x => x.ArmyOne)
                 .WithMany(x => x.Logs)
-                .HasForeignKey(x => x.OffensiveArmyId)
+                .HasForeignKey(x => x.ArmyOneId)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder
-                .HasOne(x => x.DefensiveArmy)
+                .HasOne(x => x.ArmyTwo)
                 .WithMany()
-                .HasForeignKey(x => x.DefensiveArmyId)
+                .HasForeignKey(x => x.ArmyTwoId)
                 .IsRequired(false);
         }
     }

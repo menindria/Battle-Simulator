@@ -1,5 +1,4 @@
-﻿using BattleSimulator.Domain;
-using BattleSimulator.Domain.Contracts.Services;
+﻿using BattleSimulator.Domain.Contracts.Services;
 using BattleSimulator.Domain.Services;
 using BattleSimulator.Infrastructure.DataAccess.AttackStrategies;
 using Microsoft.Extensions.DependencyInjection;

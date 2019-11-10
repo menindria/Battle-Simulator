@@ -35,10 +35,10 @@ namespace BattleSimulator.Domain
 
         public IResponse Start()
         {
-            if (Armies.Count < 10)
-            {
-                return new ErrorResponse("There is not enough armies for battle to start");
-            }
+            //if (Armies.Count < 10)
+            //{
+            //    return new ErrorResponse("There is not enough armies for battle to start");
+            //}
 
             Started = true;
             return new SuccessResponse();
@@ -46,6 +46,11 @@ namespace BattleSimulator.Domain
         public void Stop()
         {
             Started = false;
+        }
+        
+        public void ClearLogs()
+        {
+            Logs.Clear();
         }
     }
 }

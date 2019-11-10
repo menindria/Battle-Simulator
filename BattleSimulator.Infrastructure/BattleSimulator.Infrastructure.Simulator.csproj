@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BattleSimulator.Application\BattleSimulator.Application.csproj" />
     <ProjectReference Include="..\BattleSimulator.CrossCutting\BattleSimulator.CrossCutting.csproj" />
+    <ProjectReference Include="..\BattleSimulator.Infrastructure.DataAccess\BattleSimulator.Infrastructure.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

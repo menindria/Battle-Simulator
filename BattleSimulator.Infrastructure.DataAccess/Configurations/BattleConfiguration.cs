@@ -10,11 +10,18 @@ namespace BattleSimulator.Infrastructure.DataAccess.Configurations
         {
             builder
                 .Property(x => x.Name)
+                .IsRequired()
                 .HasMaxLength(255);
 
             builder.HasMany(x => x.Logs)
                 .WithOne(x => x.Battle)
                 .IsRequired();
+
+            builder.HasMany(x => x.Armies)
+                .WithOne(x => x.Battle)
+                .HasForeignKey(x => x.BattleId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

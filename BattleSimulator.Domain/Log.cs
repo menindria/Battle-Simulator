@@ -5,10 +5,11 @@ namespace BattleSimulator.Domain
     public class Log : EntityBase
     {
         public Battle Battle { get; private set; }
-        public Army OffensiveArmy { get; private set; }
-        public int OffensiveArmyId { get; private set; }
-        public Army DefensiveArmy { get; private set; }
-        public int? DefensiveArmyId { get; private set; }
+        public int BattleId { get; private set; }
+        public Army ArmyOne { get; private set; }
+        public int ArmyOneId { get; private set; }
+        public Army ArmyTwo { get; private set; }
+        public int? ArmyTwoId { get; private set; }
         public LogType LogType { get; private set; }
         public DateTime TimeStamp { get; protected set; }
         protected Log()
@@ -20,21 +21,34 @@ namespace BattleSimulator.Domain
         {
             return new Log()
             {
-                Battle = battle,
+                BattleId = battle.Id,
                 LogType = LogType.Attack,
-                OffensiveArmy = offensiveArmy,
-                DefensiveArmy = defensiveArmy
+                ArmyOneId =  offensiveArmy.Id,
+                ArmyTwoId = defensiveArmy.Id
             };
         }
         
-        public static Log CreateReloadLog(Battle battle, Army offensiveArmy)
+        public static Log CreateReloadLog(Battle battle, Army army)
         {
             return new Log()
             {
-                Battle = battle,
+                BattleId = battle.Id,
                 LogType = LogType.Reload,
-                OffensiveArmy = offensiveArmy,
+                ArmyOneId = army.Id
+            };
+        }
+
+        public static Log CreateAttackedByLog(Battle battle, Army offensiveArmy, Army defensiveArmy)
+        {
+            return new Log()
+            {
+                BattleId = battle.Id,
+                LogType = LogType.AttackedBy,
+                ArmyOneId = defensiveArmy.Id,
+                ArmyTwoId = offensiveArmy.Id
             };
         }
     }
+
+
 }

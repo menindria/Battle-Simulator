@@ -25,12 +25,11 @@ namespace BattleSimulator.Infrastructure.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BattleId");
+                    b.Property<int>("BattleId");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(255);
-
-                    b.Property<int>("NumberOfAttacks");
 
                     b.Property<int>("NumberOfUnits");
 
@@ -50,6 +49,7 @@ namespace BattleSimulator.Infrastructure.DataAccess.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(255);
 
                     b.Property<bool>("Started");
@@ -65,48 +65,48 @@ namespace BattleSimulator.Infrastructure.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ArmyOneId");
+
+                    b.Property<int?>("ArmyTwoId");
+
                     b.Property<int>("BattleId");
 
-                    b.Property<int?>("DefensiveArmyId");
-
                     b.Property<int>("LogType");
-
-                    b.Property<int>("OffensiveArmyId");
 
                     b.Property<DateTime>("TimeStamp");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ArmyOneId");
+
+                    b.HasIndex("ArmyTwoId");
+
                     b.HasIndex("BattleId");
-
-                    b.HasIndex("DefensiveArmyId");
-
-                    b.HasIndex("OffensiveArmyId");
 
                     b.ToTable("Log");
                 });
 
             modelBuilder.Entity("BattleSimulator.Domain.Army", b =>
                 {
-                    b.HasOne("BattleSimulator.Domain.Battle")
+                    b.HasOne("BattleSimulator.Domain.Battle", "Battle")
                         .WithMany("Armies")
-                        .HasForeignKey("BattleId");
+                        .HasForeignKey("BattleId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("BattleSimulator.Domain.Log", b =>
                 {
+                    b.HasOne("BattleSimulator.Domain.Army", "ArmyOne")
+                        .WithMany("Logs")
+                        .HasForeignKey("ArmyOneId");
+
+                    b.HasOne("BattleSimulator.Domain.Army", "ArmyTwo")
+                        .WithMany()
+                        .HasForeignKey("ArmyTwoId");
+
                     b.HasOne("BattleSimulator.Domain.Battle", "Battle")
                         .WithMany("Logs")
                         .HasForeignKey("BattleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("BattleSimulator.Domain.Army", "DefensiveArmy")
-                        .WithMany()
-                        .HasForeignKey("DefensiveArmyId");
-
-                    b.HasOne("BattleSimulator.Domain.Army", "OffensiveArmy")
-                        .WithMany("Logs")
-                        .HasForeignKey("OffensiveArmyId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
